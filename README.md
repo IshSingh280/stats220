@@ -27,4 +27,4 @@ Here are some websites I find helpful:
 
 ## A meme that captures how I currently feel about my university studies
 
-![](https://media.tenor.com/hlKEXPvlX48AAAAM/typing-fast-cat-typing.gif)
+![](https://media.tenor.com/_OTGUhMPQm8AAAAM/crashout-cat.gif)
