@@ -1,0 +1,145 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+library(tidyverse)
+```
+```{css}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Lato:wght@300;400&display=swap');
+
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  font-size: 13pt;
+  color: #2c2c2c;
+  background-color: #fdf6f0;
+  max-width: 860px;
+  margin: auto;
+  padding: 30px;
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  color: #7b4f6e;
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 5px;
+}
+
+h3 {
+  font-family: 'Playfair Display', serif;
+  color: #a0706a;
+  text-align: center;
+  font-size: 1.3em;
+}
+
+p {
+  line-height: 1.8;
+  text-align: justify;
+}
+
+.subtitle {
+  text-align: center;
+  color: #999;
+  font-size: 0.95em;
+  margin-top: -10px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background-color: #f3e8ee;
+  border-left: 5px solid #7b4f6e;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin: 25px 0;
+  font-size: 1.05em;
+}
+
+img, .ggplot {
+  display: block;
+  margin: auto;
+}
+```
+
+## Tracking Instagram Ads
+
+<p class="subtitle">An observational data analysis — STATS 220 Project 2</p>
+
+This report explores patterns in Instagram advertisements observed over several days. Each time an ad appeared, details were recorded including where it showed up, what it was advertising, how long it was watched, how relevant it felt, and whether it seemed connected to recent online activity.
+
+The goal is to uncover whether Instagram's ad targeting feels personalised, and which parts of the app serve the most ads.
+```{r}
+logged_data <- read_csv("https://docs.google.com/spreadsheets/d/1PmrFla9Xemw-RrC-M-KMJ4VhgqLrxjm-bHqcJMGmZNU/export?format=csv&gid=736675154")
+
+latest_data <- logged_data %>%
+  rename(
+    timestamp        = 1,
+    location         = 2,
+    category         = 3,
+    seconds_watched  = 4,
+    relevance        = 5,
+    related_activity = 6
+  )
+```
+```{r}
+num_obs <- latest_data$seconds_watched %>% length()
+mean_seconds <- latest_data$seconds_watched %>% mean() %>% round(1)
+mean_relevance <- latest_data$relevance %>% mean() %>% round(1)
+max_seconds <- latest_data$seconds_watched %>% max()
+```
+
+<div class="summary-box">
+`r paste0("📊 ", num_obs, " Instagram ads were observed in total. On average, each ad was watched for ", mean_seconds, " seconds — with the longest observation lasting ", max_seconds, " seconds. The average relevance rating across all ads was ", mean_relevance, " out of 5, suggesting a moderate level of personalisation.")`
+</div>
+
+---
+
+### Where Are Ads Appearing?
+
+Ads were observed across four different sections of Instagram: the Feed, Reels, Stories, and Explore page. The chart below shows which locations generated the most ad impressions during the observation period.
+```{r fig.width=7, fig.height=4, fig.align='center'}
+latest_data %>%
+  ggplot() +
+  geom_bar(aes(x = location), fill = "#7b4f6e") +
+  labs(
+    title = "Where Were Ads Seen?",
+    x = "Instagram Location",
+    y = "Number of Ads",
+    caption = "Source: Instagram Ad Observation Log"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, family = "serif", size = 14, face = "bold"),
+    axis.text = element_text(size = 11),
+    plot.caption = element_text(color = "grey60")
+  )
+```
+
+---
+
+### What Types of Ads Are Showing Up?
+
+Each ad was categorised by its content type. The chart below breaks down the spread of ad categories, giving insight into what kinds of products and services Instagram is promoting.
+```{r fig.width=7, fig.height=4, fig.align='center'}
+latest_data %>%
+  ggplot() +
+  geom_bar(aes(x = category), fill = "#c47c5a") +
+  labs(
+    title = "Ad Categories Observed",
+    x = "Category",
+    y = "Number of Ads",
+    caption = "Source: Instagram Ad Observation Log"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, family = "serif", size = 14, face = "bold"),
+    axis.text = element_text(size = 11),
+    plot.caption = element_text(color = "grey60")
+  )
+```
+
+---
+
+`r paste0("Overall, the data suggests that Instagram's ad delivery is moderately targeted — with a mean relevance score of ", mean_relevance, " out of 5 across ", num_obs, " observations. Further data collection may reveal stronger patterns over time.")`
