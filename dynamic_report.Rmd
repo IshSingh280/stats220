@@ -25,7 +25,6 @@ h2 {
   color: #7b4f6e;
   text-align: center;
   font-size: 2em;
-  margin-bottom: 5px;
 }
 
 h3 {
@@ -39,37 +38,13 @@ p {
   line-height: 1.8;
   text-align: justify;
 }
-
-.subtitle {
-  text-align: center;
-  color: #999;
-  font-size: 0.95em;
-  margin-top: -10px;
-  margin-bottom: 30px;
-}
-
-.summary-box {
-  background-color: #f3e8ee;
-  border-left: 5px solid #7b4f6e;
-  padding: 15px 20px;
-  border-radius: 8px;
-  margin: 25px 0;
-  font-size: 1.05em;
-}
-
-img, .ggplot {
-  display: block;
-  margin: auto;
-}
 ```
 
 ## Tracking Instagram Ads
 
-<p class="subtitle">An observational data analysis — STATS 220 Project 2</p>
+*An observational data analysis — STATS 220 Project 2*
 
 This report explores patterns in Instagram advertisements observed over several days. Each time an ad appeared, details were recorded including where it showed up, what it was advertising, how long it was watched, how relevant it felt, and whether it seemed connected to recent online activity.
-
-The goal is to uncover whether Instagram's ad targeting feels personalised, and which parts of the app serve the most ads.
 ```{r}
 logged_data <- read_csv("https://docs.google.com/spreadsheets/d/1PmrFla9Xemw-RrC-M-KMJ4VhgqLrxjm-bHqcJMGmZNU/export?format=csv&gid=736675154")
 
@@ -90,15 +65,13 @@ mean_relevance <- latest_data$relevance %>% mean() %>% round(1)
 max_seconds <- latest_data$seconds_watched %>% max()
 ```
 
-<div class="summary-box">
-`r paste0("📊 ", num_obs, " Instagram ads were observed in total. On average, each ad was watched for ", mean_seconds, " seconds — with the longest observation lasting ", max_seconds, " seconds. The average relevance rating across all ads was ", mean_relevance, " out of 5, suggesting a moderate level of personalisation.")`
-</div>
+`r paste0("A total of ", num_obs, " Instagram ads were observed. On average, ads were watched for ", mean_seconds, " seconds, with the longest observation lasting ", max_seconds, " seconds. The mean relevance rating was ", mean_relevance, " out of 5, suggesting a moderate level of personalisation.")`
 
 ---
 
 ### Where Are Ads Appearing?
 
-Ads were observed across four different sections of Instagram: the Feed, Reels, Stories, and Explore page. The chart below shows which locations generated the most ad impressions during the observation period.
+Ads were observed across different sections of Instagram including the Feed, Reels, Stories, and Explore page. The chart below shows which locations generated the most ad impressions during the observation period.
 ```{r fig.width=7, fig.height=4, fig.align='center'}
 latest_data %>%
   ggplot() +
@@ -121,7 +94,7 @@ latest_data %>%
 
 ### What Types of Ads Are Showing Up?
 
-Each ad was categorised by its content type. The chart below breaks down the spread of ad categories, giving insight into what kinds of products and services Instagram is promoting.
+Each ad was categorised by its content type. The chart below breaks down the spread of ad categories, giving insight into what kinds of products and services Instagram is promoting most frequently.
 ```{r fig.width=7, fig.height=4, fig.align='center'}
 latest_data %>%
   ggplot() +
