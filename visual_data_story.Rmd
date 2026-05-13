@@ -3,271 +3,297 @@ title: "How Instagram Ads Compete for Attention"
 output: html_document
 ---
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
 ```
 
-```{js}
-$(function() {
-  // Start all sections invisible (opacity 0, shifted down slightly)
-  $(".level2").addClass("section-hidden");
-  $(".container-fluid").height($(".container-fluid").height() + 300);
-
-  function checkSections() {
-    $(".level2").each(function() {
-      var top = $(this).offset().top - $(window).scrollTop();
-      var windowHeight = $(window).height();
-      if (top < windowHeight * 0.88) {
-        $(this).removeClass("section-hidden").addClass("section-visible");
-      } else {
-        $(this).removeClass("section-visible").addClass("section-hidden");
-      }
-    });
-  }
-
-  // Run once on load so the first section is already visible
-  checkSections();
-  $(window).on('scroll', checkSections);
-})
-```
-
 ```{css, echo=FALSE}
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;700&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 .figcaption { display: none; }
 
 /* ── Base ── */
 body {
-  background-color: #f5f4f0;
+  background-color: #f7f5f2;
   color: #1a1a1a;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.75;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  line-height: 1.8;
 }
 
 .container-fluid {
-  max-width: 860px;
-  margin: auto;
-  padding: 2.5rem 1.5rem 4rem;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 3rem 1.75rem 6rem;
 }
 
-/* ── Hero header ── */
+/* ── Hero ── */
 .hero-block {
-  background: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #e8e6e0;
-  padding: 3rem 2.5rem;
+  background: linear-gradient(145deg, #ffffff 60%, #f0faf6);
+  border-radius: 24px;
+  border: 1px solid #e4e0d8;
+  padding: 3.5rem 3rem 3rem;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-block::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #b3e2cd, #fdcdac, #cbd5e8, #f4cae4);
+  border-radius: 24px 24px 0 0;
 }
 
 h1.title {
-  font-size: 2rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.6rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #1a1a1a;
+  line-height: 1.2;
   margin-bottom: 1rem;
   border: none;
   padding: 0;
 }
 
 .hero-intro {
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: #6b6860;
-  max-width: 580px;
-  margin: 0 auto 1.75rem;
+  max-width: 560px;
+  margin: 0 auto 2rem;
+  line-height: 1.75;
 }
 
 /* ── Stat chips ── */
 .stats-row {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
 }
 
 .stat-chip {
-  background: #f5f4f0;
-  border-radius: 10px;
-  padding: 0.6rem 1.25rem;
+  background: #f7f5f2;
+  border: 1px solid #e4e0d8;
+  border-radius: 14px;
+  padding: 0.75rem 1.5rem;
   text-align: center;
-  min-width: 120px;
+  min-width: 130px;
 }
 
 .stat-chip .val {
-  font-size: 1.4rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.75rem;
   font-weight: 700;
   color: #1a1a1a;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .stat-chip .lbl {
   font-size: 0.75rem;
-  color: #8a8880;
-  margin-top: 3px;
+  color: #9a9690;
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 /* ── Note pill ── */
 .note {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
   background: #ffffff;
-  border-left: 3px solid #5DCAA5;
-  border-radius: 0 10px 10px 0;
-  padding: 14px 18px;
+  border-left: 4px solid #b3e2cd;
+  border-radius: 0 12px 12px 0;
+  padding: 14px 20px;
   margin: 0 0 2rem;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: #5a5855;
-  line-height: 1.65;
+  line-height: 1.7;
 }
 
 /* ── Section cards ── */
 .section.level2 {
   background: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #e8e6e0;
-  padding: 2rem 2.25rem 2.25rem;
-  margin-bottom: 1.5rem;
-  box-shadow: none;
+  border-radius: 20px;
+  border: 1px solid #e4e0d8;
+  padding: 2.25rem 2.5rem 2.5rem;
+  margin-bottom: 1.75rem;
+  opacity: 0;
+  transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.section-hidden {
-  opacity: 0;
-  transform: translateY(28px);
-}
-
-.section-visible {
+.section.level2.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* Pastel top accent per section */
+.section.level2:nth-of-type(1) { border-top: 4px solid #b3e2cd; }
+.section.level2:nth-of-type(2) { border-top: 4px solid #fdcdac; }
+.section.level2:nth-of-type(3) { border-top: 4px solid #cbd5e8; }
+.section.level2:nth-of-type(4) { border-top: 4px solid #f4cae4; }
+.section.level2:nth-of-type(5) { border-top: 4px solid #e6f5c9; }
+
+/* ── Section headings ── */
 h2 {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 1.15rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.55rem;
   font-weight: 700;
   color: #1a1a1a;
   background: none;
-  padding: 0;
+  padding: 0 0 1rem;
   border-radius: 0;
-  margin-top: 0;
-  margin-bottom: 1.25rem;
-  border-bottom: 1px solid #f0ede8;
-  padding-bottom: 1rem;
+  margin: 0 0 1.5rem;
+  border-bottom: 1.5px solid #f0ede8;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
+/* Section number badge */
 h2::before {
   content: attr(data-num);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.8rem;
   font-weight: 700;
   flex-shrink: 0;
+  margin-right: 12px;
+  vertical-align: middle;
   background: #E1F5EE;
   color: #0F6E56;
 }
 
-/* Override per-section number colours */
-.level2:nth-of-type(2) h2::before { background: #E1F5EE; color: #0F6E56; }
+.level2:nth-of-type(1) h2::before { background: #E1F5EE; color: #0F6E56; }
+.level2:nth-of-type(2) h2::before { background: #FEF0E3; color: #8B4513; }
 .level2:nth-of-type(3) h2::before { background: #EEEDFE; color: #3C3489; }
-.level2:nth-of-type(4) h2::before { background: #FAEEDA; color: #633806; }
-.level2:nth-of-type(5) h2::before { background: #FAECE7; color: #712B13; }
+.level2:nth-of-type(4) h2::before { background: #FAECE7; color: #712B13; }
+.level2:nth-of-type(5) h2::before { background: #EEF7E0; color: #3A6018; }
 
+/* ── Body text ── */
 p {
-  font-size: 0.9625rem;
+  font-size: 1rem;
   color: #4a4845;
-  max-width: 780px;
-  margin-left: 0;
-  margin-right: 0;
+  line-height: 1.85;
+  margin-bottom: 1rem;
 }
+
+p:last-child { margin-bottom: 0; }
 
 strong {
   font-weight: 700;
   color: #1a1a1a;
 }
 
+/* ── Plot images ── */
 img {
   display: block;
-  margin: 1.5rem auto;
+  margin: 1.75rem auto;
   max-width: 100%;
-  border-radius: 12px;
-  border: 1px solid #e8e6e0;
+  border-radius: 14px;
+  border: 1px solid #e4e0d8;
 }
 
-/* ── Conclusion ── */
+/* ── Conclusion card ── */
 .conclusion {
-  background: #f5f4f0;
-  border-radius: 14px;
-  padding: 1.75rem 2rem;
-  margin-top: 0.5rem;
+  background: linear-gradient(135deg, #f0faf6, #fef8f0);
+  border-radius: 16px;
+  border: 1px solid #deeee8;
+  padding: 2rem 2.25rem;
 }
 
 .conclusion p {
-  font-size: 0.9rem;
-  color: #5a5855;
+  font-size: 0.975rem;
+  color: #4a4845;
 }
 ```
 
+```{js, echo=FALSE}
+document.addEventListener('DOMContentLoaded', function () {
+  var sections = document.querySelectorAll('.section.level2');
+
+  function reveal() {
+    sections.forEach(function(sec) {
+      if (sec.getBoundingClientRect().top < window.innerHeight * 0.92) {
+        sec.classList.add('visible');
+      }
+    });
+  }
+
+  reveal();
+  window.addEventListener('scroll', reveal, { passive: true });
+});
+```
+
+```{=html}
 <div class="hero-block">
-<h1 class="title">How Instagram Ads Compete for Attention</h1>
-<p class="hero-intro">An observational log of sponsored Instagram ads — exploring where they appear, what categories hold attention longest, and how personalisation shapes relevance.</p>
-<div class="stats-row">
-<div class="stat-chip"><div class="val">43</div><div class="lbl">Ads observed</div></div>
-<div class="stat-chip"><div class="val">16.2s</div><div class="lbl">Avg watch time</div></div>
-<div class="stat-chip"><div class="val">3.6 / 5</div><div class="lbl">Avg relevance</div></div>
-</div>
+  <h1 class="title">How Instagram Ads<br>Compete for Attention</h1>
+  <p class="hero-intro">An observational log of 43 sponsored Instagram ads — exploring where they appear, which categories hold attention longest, and how personalisation shapes relevance.</p>
+  <div class="stats-row">
+    <div class="stat-chip"><div class="val">43</div><div class="lbl">Ads observed</div></div>
+    <div class="stat-chip"><div class="val">16.2s</div><div class="lbl">Avg watch time</div></div>
+    <div class="stat-chip"><div class="val">3.6 / 5</div><div class="lbl">Avg relevance</div></div>
+  </div>
 </div>
 
 <div class="note">
-<strong>Visual theme:</strong> The 7-class Pastel2 qualitative palette from ColorBrewer is used throughout, chosen because Instagram location and ad category are separate groups rather than ordered values.
+  <strong>Visual theme:</strong> The 7-class Pastel2 qualitative palette from ColorBrewer is used consistently across all plots and the page design — chosen because Instagram location and ad category are separate groups with no inherent order.
 </div>
+```
 
 ## Reels was the main place ads appeared
 
 ![Horizontal bar chart showing where sponsored Instagram ads appeared. Reels had the highest count with 17 ads, followed by Explore with 12 ads. Feed and Stories had 6 ads each, while Other had the lowest count with 2 ads.](plot1.png)
 
-Sponsored ads were not spread evenly across Instagram locations. **Reels had the highest number of observed ads**, followed by **Explore**. Feed and Stories appeared less often in my observations.
+Sponsored ads were not spread evenly across Instagram locations. **Reels had the highest number of observed ads with 17**, followed by **Explore with 12**. Feed and Stories each had 6 ads, while Other had the fewest at just 2.
 
-Reels and Explore are both areas where users often scroll through new content, so it makes sense that many sponsored ads appeared there during the observation period.
+This pattern reflects how Instagram surfaces content. Reels and Explore are both designed for continuous, open-ended scrolling through new material — making them natural spaces for ad delivery. Feed and Stories tend to be more intentional, with users viewing content from people they already follow, which may explain the lower ad frequency in those locations.
 
 ## Entertainment ads held attention the longest
 
 ![Horizontal bar chart showing average seconds watched by ad category. Entertainment ads had the longest average watch time at about 20 seconds, followed by Education, Finance, Fashion, Technology, Food or Drink, and Other.](plot2.png)
 
-The second plot compares average seconds watched per ad category. **Entertainment ads had the highest average watch time**, at about **20 seconds**. Education, Finance, and Fashion ads also had relatively high viewing times.
+Looking beyond frequency, this plot measures **which types of ads actually held attention**. Entertainment ads had the highest average watch time at around **20 seconds** — the longest of any category. Education and Finance ads followed closely, while Food or Drink and Other had the shortest average viewing times.
 
-This part of the story is about attention rather than frequency. An ad category may not appear most often, but can still be effective if it makes people pause longer.
+This distinction matters: an ad category does not need to appear most often to be effective. Entertainment ads may hold attention because their content — video clips, humour, or storytelling — is harder to distinguish from non-sponsored Reels at a glance, making it more likely that a viewer watches before realising it is an ad.
 
 ## Relevance seemed connected to longer watch time
 
 ![Scatter plot comparing relevance rating and seconds watched. Lower relevance ratings around 1 and 2 mostly had shorter viewing times, while ratings of 4 and 5 included many longer viewing times. Points are coloured by whether the ad seemed related to recent activity.](plot3.png)
 
-Higher relevance ratings often lined up with longer viewing times. Ads rated **1 or 2** tended to have low watch times, while ads rated **4 or 5** included many observations with longer watch times.
+This scatter plot explores whether feeling relevant translates into more time spent watching. The overall pattern is clear: ads rated **1 or 2 out of 5** for relevance were almost all watched for fewer than 10 seconds, while ads rated **4 or 5** included many observations above 15 seconds.
 
-Ads that seemed related to recent activity were more common among the higher relevance ratings — supporting the idea that Instagram ads feel more personal when they connect to recent searches, viewing, or purchases.
+The colour grouping adds a second layer to the story. Ads that seemed connected to recent activity — recent searches, purchases, or viewed content — clustered toward the higher relevance ratings. This supports the idea that Instagram's ad targeting creates a feedback loop: when an ad connects to something the user has already done, it feels more relevant and gets watched for longer.
 
 ## The observations happened in bursts
 
 ![Line chart showing the number of sponsored Instagram ads logged each day. The data shows a high number of observations around 30 March, a very low count around 31 March, and another high count in early May.](plot4.png)
 
-Data collection happened in bursts rather than evenly every day — with a spike around 30 March, a near-zero count on 31 March, and another peak in early May.
+This final plot shifts from asking *what* the ads were like to asking *when* the data was collected. Rather than a steady stream of observations, logging happened in clear bursts — a high count around **30 March**, an almost zero count on **31 March**, and another cluster in **early May**.
 
-This is useful context: the types of ads seen on one heavy scrolling day may not perfectly represent every day of Instagram use.
+This is important context for interpreting the earlier plots. Days with heavy Instagram use may have produced different types of ads than quieter days, and the category or relevance patterns observed could reflect the algorithm's response to a particular session rather than a stable long-term pattern.
 
 ## Overall, the ads looked moderately personalised
 
+```{=html}
 <div class="conclusion">
+```
 
-Across the four visualisations, Instagram ads were most commonly observed in Reels and Explore, entertainment ads held attention for the longest time, and higher relevance ratings were generally associated with longer watch times.
+Across the four visualisations, a consistent picture emerges. Sponsored Instagram ads appeared most often in **Reels and Explore** — the parts of the app designed for discovering new content. **Entertainment ads** held attention the longest, likely because their format blends naturally with non-sponsored video content. And **higher relevance ratings generally aligned with longer watch times**, with ads connected to recent activity scoring both higher on relevance and attracting more viewing time.
 
-The data also suggests moderate personalisation: many ads seemed connected to recent online activity, and those ads often had higher relevance ratings. However, because this is an observational log from a limited period, the results should be interpreted as patterns from my collected observations rather than proof of exactly how Instagram's algorithm works for everyone.
+Taken together, these patterns suggest **moderate personalisation**: the algorithm appears to use browsing and purchase behaviour to surface ads that feel relevant, and those ads are rewarded with more attention. However, because this dataset comes from one person's observations over a limited period, the findings reflect personal patterns rather than universal conclusions about how Instagram's advertising system works.
 
+```{=html}
 </div>
+```
